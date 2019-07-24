@@ -9,12 +9,23 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
-    "apollo-boost": "^0.4.3",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.16.2",
     "graphql": "^14.4.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.5",
     "nodemon": "^1.19.1",
-    "react-apollo": "^2.5.8"
-  }
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-steam": "^1.0.10",
+    "steam-totp": "^2.1.0",
+    "steam-tradeoffer-manager": "^2.10.0",
+    "steam-user": "^4.12.2",
+    "steamapi": "^2.0.7",
+    "steamcommunity": "^3.40.0"
+  },
+  "devDependencies": {}
 }
