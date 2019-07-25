@@ -1,31 +1,36 @@
 {
   "name": "steam-trade-backend",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "repository": "https://github.com/nyamkamunhjin/steam-trade-backend.git",
-  "author": "nyamkamunhjin <nyamkamunhjin@gmail.com>",
-  "license": "MIT",
   "scripts": {
-    "start": "nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyamkamunhjin/steam-trade-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyamkamunhjin/steam-trade-backend/issues"
+  },
+  "homepage": "https://github.com/nyamkamunhjin/steam-trade-backend#readme",
   "dependencies": {
+    "apollo-server": "^2.7.0",
+    "apollo-server-express": "^2.7.0",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "express-graphql": "^0.9.0",
-    "express-handlebars": "^3.1.0",
-    "express-session": "^1.16.2",
     "graphql": "^14.4.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.6.5",
-    "nodemon": "^1.19.1",
+    "mongoose": "^5.6.6",
     "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
-    "passport-steam": "^1.0.10",
-    "steam-totp": "^2.1.0",
-    "steam-tradeoffer-manager": "^2.10.0",
-    "steam-user": "^4.12.2",
-    "steamapi": "^2.0.7",
-    "steamcommunity": "^3.40.0"
+    "passport-steam": "^1.0.10"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
 }
