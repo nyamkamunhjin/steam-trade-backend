@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const passport = require('./steamAuth/passport');
 const typeDefs = require('./graphql/schema/schema');
@@ -11,11 +12,10 @@ const { resolvers } = require('./graphql/resolvers/resolvers');
 
 dotenv.config();
 const app = express();
-let user = {
-  user: null,
-  token: null,
-  tokenExpiration: null
-};
+let user;
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
 
 app.use(cors());
 app.use(passport.initialize());
@@ -35,7 +35,7 @@ app.get(
       }),
       tokenExpiration
     } 
-    res.redirect('/');
+    res.render('authenticated', { clientUrl: process.env.FRONTEND_URL });
   }
 );
 

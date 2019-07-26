@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Authenticated</title>
+</head>
+
+<body>
+  Authenticated successfully.
+
+  <script>
+    window.opener.postMessage({
+      ok: true
+    }, '<%= clientUrl %>');
+
+    window.close();
+  </script>
+</body>
+
+</html>

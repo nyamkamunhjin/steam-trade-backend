@@ -7,9 +7,7 @@ module.exports.resolvers = {
         token: 'abadaAewq1',
         tokenExpiration: 1
       }
-    }
-  },
-  Mutation: {
+    },
     login: (parent, args, context) => {
       if(!context.user) {
         throw Error('Empty context.');
@@ -23,5 +21,8 @@ module.exports.resolvers = {
       }
 
     }
-  }
+  },
+  // Mutation: {
+    
+  // }
 };

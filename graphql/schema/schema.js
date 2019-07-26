@@ -3,9 +3,6 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   type Query {
     loggedInUsers: [User]!
-  }
-
-  type Mutation {
     login: User!
   }
 
@@ -34,7 +31,7 @@ const typeDefs = gql`
     loccountrycode: String!
     locstatecode: String!
     loccityid: Int!
-}
+  }
 `;
 
 module.exports = typeDefs;
