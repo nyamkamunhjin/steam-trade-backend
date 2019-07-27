@@ -3,6 +3,10 @@ const SteamCommunity = require('steamcommunity');
 const TradeOfferManager = require('steam-tradeoffer-manager');
 const SteamTotp = require('steam-totp');
 const { auth } = require('./botAuth');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 
 class SteamBot {
   constructor(logOnOptions) {
@@ -15,7 +19,7 @@ class SteamBot {
     });
 
     this.logOn(logOnOptions);
-    this.getUserItems(auth.steamid, 730).then(items => {
+    this.getUserItems(process.env.steamid, 730).then(items => {
       console.log(`items: ${items}`);
     })
     
@@ -33,7 +37,7 @@ class SteamBot {
     this.client.on('webSession', (sessionId, cookies) => {
       this.manager.setCookies(cookies);
       this.community.setCookies(cookies);
-      this.community.startConfirmationChecker(10000, auth.identity_secret);
+      this.community.startConfirmationChecker(10000, process.env.identity_secret);
 
     });
   }
@@ -66,7 +70,7 @@ class SteamBot {
 }
 
 module.exports = new SteamBot({
-  account_name: auth.account_name,
-  password: auth.password,
-  twoFactorCode: SteamTotp.generateAuthCode(auth.shared_secret)
+  account_name: process.env.account_name,
+  password: process.env.password,
+  twoFactorCode: SteamTotp.generateAuthCode(process.env.shared_secret)
 });
