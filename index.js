@@ -46,7 +46,6 @@ const server = new ApolloServer({
     const token = req.headers.authorization || '';
     const data = getUser(token.split(' ')[1]);
     
-    
     return {
       user: user || null,
       userData: data

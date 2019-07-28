@@ -24,13 +24,13 @@ module.exports.resolvers = {
     },
     getUserItems: async (parent, args, context) => {
       // change later cuz wrong
-      // if(!context.userData) {
-      //   throw Error('Unathenticated.');
-      // }
+      if(!context.userData) {
+        throw Error('Unathenticated.');
+      }
 
       try {
         let items; 
-        await steamBot.getUserItems(args.steam_id, 570).then(data => {
+        await steamBot.getUserItems(args.steam_id, 730).then(data => {
           items = data;
         });
 
