@@ -9,11 +9,13 @@ const path = require('path');
 const passport = require('./steamAuth/passport');
 const typeDefs = require('./graphql/schema/schema');
 const { resolvers } = require('./graphql/resolvers/resolvers');
+const steamBot = require('./steambot/bot');
 
 dotenv.config();
 const app = express();
 let user;
 
+// steamBot.getUserItems('https://steamcommunity.com/id/mugic7/', 730)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
