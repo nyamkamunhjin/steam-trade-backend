@@ -1,3 +1,5 @@
+const steamBot = require('../../steambot/bot');
+
 module.exports.resolvers = {
   Query: {
     loggedInUsers: (parent, args, context) => {
@@ -12,7 +14,6 @@ module.exports.resolvers = {
       if(!context.user) {
         throw Error('Empty context.');
       } 
-      console.log(context);
 
       return {
         user: context.user.user._json,
@@ -20,6 +21,15 @@ module.exports.resolvers = {
         tokenExpiration: context.user.tokenExpiration
       }
 
+    },
+    getUserItems: (parent, args, context) => {
+      // change later cuz wrong
+      // if(!context.user) {
+      //   throw Error('Empty context.');
+      // }
+      const data = steamBot.getBotItems(args.steam_id, 730);
+      // console.log(data);
+      
     }
   },
   // Mutation: {

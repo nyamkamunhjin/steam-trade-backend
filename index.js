@@ -9,18 +9,19 @@ const path = require('path');
 const passport = require('./steamAuth/passport');
 const typeDefs = require('./graphql/schema/schema');
 const { resolvers } = require('./graphql/resolvers/resolvers');
+const steamBot = require('./steambot/bot');
 
 dotenv.config();
+
 const app = express();
 let user;
+
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
 app.use(cors());
 app.use(passport.initialize());
-
-
 
 app.get(
   /^\/auth\/steam(\/return)?$/,

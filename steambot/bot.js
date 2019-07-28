@@ -2,6 +2,7 @@ const SteamUser = require('steam-user');
 const SteamCommunity = require('steamcommunity');
 const TradeOfferManager = require('steam-tradeoffer-manager');
 const { auth } = require('./botAuth');
+const SteamTotp = require('steam-totp');
 
 class SteamBot {
   constructor(logOnOptions) {
@@ -12,6 +13,7 @@ class SteamBot {
       community: this.community,
       language: 'en'
     });
+    this.items = null;
 
     this.logOn(logOnOptions);
   }
@@ -21,7 +23,7 @@ class SteamBot {
 
     this.client.on('loggedOn', () => {
       console.log('Logged into Steam');
-      
+
       this.client.setPersona(SteamUser.EPersonaState.Online);
     });
 
@@ -31,6 +33,41 @@ class SteamBot {
       this.community.startConfirmationChecker(10000, auth.identity_secret);
     });
   }
+
+  async loadUserItems(steam_id, game_id) {
+    try {
+      this.community.getUserInventoryContents(
+        steam_id,
+        game_id,
+        2,
+        true,
+        (err, inventory) => {
+          if (err) {
+            throw err;
+          }
+  
+          let inventoryPromise = new Promise((resolve, reject) => {
+            resolve(inventory);
+          });
+  
+          inventoryPromise.then((value) => {
+            this.items = value;
+          });
+          console.log(items);
+          
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(this.items);
+    
+  }
 }
 
-module.exports = SteamBot;
+
+module.exports = new SteamBot({
+  accountName: auth.account_name,
+	password: auth.password,
+	twoFactorCode: SteamTotp.generateAuthCode(auth.shared_secret)
+});
