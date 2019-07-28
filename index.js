@@ -9,16 +9,15 @@ const path = require('path');
 const passport = require('./steamAuth/passport');
 const typeDefs = require('./graphql/schema/schema');
 const { resolvers } = require('./graphql/resolvers/resolvers');
-const steamBot = require('./steambot/bot');
-
+const getUser = require('./middleware/is-auth');
 dotenv.config();
 
 const app = express();
 let user;
 
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
+
 
 app.use(cors());
 app.use(passport.initialize());
@@ -44,10 +43,13 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
-    // console.log(req.user);
-
+    const token = req.headers.authorization || '';
+    const data = getUser(token.split(' ')[1]);
+    
+    
     return {
       user: user || null,
+      userData: data
     };
   }
 });

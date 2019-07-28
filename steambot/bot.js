@@ -1,8 +1,11 @@
 const SteamUser = require('steam-user');
 const SteamCommunity = require('steamcommunity');
 const TradeOfferManager = require('steam-tradeoffer-manager');
-const { auth } = require('./botAuth');
 const SteamTotp = require('steam-totp');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 
 class SteamBot {
   constructor(logOnOptions) {
@@ -13,9 +16,9 @@ class SteamBot {
       community: this.community,
       language: 'en'
     });
-    this.items = null;
 
     this.logOn(logOnOptions);
+    
   }
 
   logOn(logOnOptions) {
@@ -30,44 +33,40 @@ class SteamBot {
     this.client.on('webSession', (sessionId, cookies) => {
       this.manager.setCookies(cookies);
       this.community.setCookies(cookies);
-      this.community.startConfirmationChecker(10000, auth.identity_secret);
+      this.community.startConfirmationChecker(10000, process.env.identity_secret);
+
     });
   }
 
-  async loadUserItems(steam_id, game_id) {
-    try {
+  async getUserItems(steam_id, app_id) {
+    const inventoryPromise = new Promise((resolve, reject) => {
       this.community.getUserInventoryContents(
         steam_id,
-        game_id,
+        app_id,
         2,
         true,
         (err, inventory) => {
-          if (err) {
-            throw err;
-          }
-  
-          let inventoryPromise = new Promise((resolve, reject) => {
-            resolve(inventory);
-          });
-  
-          inventoryPromise.then((value) => {
-            this.items = value;
-          });
-          console.log(items);
-          
+          resolve(inventory);
         }
       );
+    });
+
+    try {
+      let items;
+      await inventoryPromise.then(inventory => {
+        items = inventory;
+      });
+        
+      return items;
     } catch (err) {
       console.log(err);
+      throw err;
     }
-    console.log(this.items);
-    
   }
 }
 
-
 module.exports = new SteamBot({
-  accountName: auth.account_name,
-	password: auth.password,
-	twoFactorCode: SteamTotp.generateAuthCode(auth.shared_secret)
+  accountName: process.env.account_name.toString(),
+  password: process.env.password,
+  twoFactorCode: SteamTotp.generateAuthCode(process.env.shared_secret)
 });
