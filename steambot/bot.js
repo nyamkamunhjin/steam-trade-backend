@@ -3,9 +3,9 @@ const SteamCommunity = require('steamcommunity');
 const TradeOfferManager = require('steam-tradeoffer-manager');
 const SteamTotp = require('steam-totp');
 const dotenv = require('dotenv');
+const steamprice = require('steam-price-api');
 
 dotenv.config();
-
 
 class SteamBot {
   constructor(logOnOptions) {
@@ -18,7 +18,6 @@ class SteamBot {
     });
 
     this.logOn(logOnOptions);
-    
   }
 
   logOn(logOnOptions) {
@@ -33,8 +32,10 @@ class SteamBot {
     this.client.on('webSession', (sessionId, cookies) => {
       this.manager.setCookies(cookies);
       this.community.setCookies(cookies);
-      this.community.startConfirmationChecker(10000, process.env.identity_secret);
-
+      this.community.startConfirmationChecker(
+        10000,
+        process.env.identity_secret
+      );
     });
   }
 
@@ -52,11 +53,7 @@ class SteamBot {
     });
 
     try {
-      let items;
-      await inventoryPromise.then(inventory => {
-        items = inventory;
-      });
-        
+      const items = await inventoryPromise;
       return items;
     } catch (err) {
       console.log(err);

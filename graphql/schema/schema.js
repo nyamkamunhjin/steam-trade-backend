@@ -48,28 +48,16 @@ const typeDefs = gql`
 
   type SteamItem {
     appid: Int!
-    contextid: String!
-    assetid: String!
-    classid: String!
-    instanceid: String!
-    amount: Int!
-    pos: Int!
-    id: String!
-    background_color: String!
+    id: String!   
     icon_url: String!
-    descriptions: [Description]
     tradable: Boolean!
-    name: String!
-    name_color: String!
     type: String!
     market_name: String!
     market_hash_name: String!
-    commodity: Boolean!
     market_tradable_restriction: Int!
     marketable: Boolean!
-    tags: [Tag]
-    is_currency: Boolean!
-    market_marketable_restriction: Int!
+    market_marketable_restriction: Int! 
+    price: Float!
   }
 `;
 

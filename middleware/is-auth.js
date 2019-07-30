@@ -6,9 +6,15 @@ module.exports = (token) => {
   if(!token) {
     return;
   }
-
-  const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  let userData;
+  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    if(err) {
+      console.log(err);
+    }
+    console.log(decoded);
+    userData = decoded;
+  });
   
-  return decoded.user;
+  return userData.user;
 
 };
