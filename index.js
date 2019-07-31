@@ -5,7 +5,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const path = require('path');
-
+const fetch = require('node-fetch');
 const passport = require('./steamAuth/passport');
 const typeDefs = require('./graphql/schema/schema');
 const { resolvers } = require('./graphql/resolvers/resolvers');
@@ -15,9 +15,9 @@ dotenv.config();
 const app = express();
 let user;
 
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
-
 
 app.use(cors());
 app.use(passport.initialize());
@@ -34,7 +34,7 @@ app.get(
         expiresIn: `${tokenExpiration}h`
       }),
       tokenExpiration
-    } 
+    };
     res.render('authenticated', { clientUrl: process.env.FRONTEND_URL });
   }
 );
@@ -45,9 +45,10 @@ const server = new ApolloServer({
   context: ({ req }) => {
     const token = req.headers.authorization || '';
     const data = getUser(token.split(' ')[1]);
-    
+    const tempUser = user;
+    user = null;
     return {
-      user: user || null,
+      user: tempUser,
       userData: data
     };
   }

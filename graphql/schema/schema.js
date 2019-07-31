@@ -4,7 +4,8 @@ const typeDefs = gql`
   type Query {
     loggedInUsers: [User]!
     login: User!
-    getUserItems(steam_id: String!): [SteamItem]
+    getUserItems(steam_id: String! app_id: Int! ): [SteamItem!]!
+    getUser: SteamUser!
   }
 
   type User {
@@ -12,13 +13,13 @@ const typeDefs = gql`
     token: String!
     tokenExpiration: Int!
   }
+
   type SteamUser {
     steamid: String!
     communityvisibilitystate: Int!
     profilestate: Int!
     personaname: String!
     lastlogoff: Int!
-    commentpermission: Int!
     profileurl: String!
     avatar: String!
     avatarmedium: String!
@@ -33,22 +34,8 @@ const typeDefs = gql`
     loccityid: Int!
   }
 
-  type Description {
-    type: String
-    value: String
-    color: String
-  }
-
-  type Tag {
-    internal_name: String!
-    name: String!
-    category: String!
-    color: String!
-  }
-
   type SteamItem {
-    appid: Int!
-    id: String!   
+    appid: Int!   
     icon_url: String!
     tradable: Boolean!
     type: String!

@@ -3,7 +3,6 @@ const SteamCommunity = require('steamcommunity');
 const TradeOfferManager = require('steam-tradeoffer-manager');
 const SteamTotp = require('steam-totp');
 const dotenv = require('dotenv');
-const steamprice = require('steam-price-api');
 
 dotenv.config();
 
@@ -37,28 +36,6 @@ class SteamBot {
         process.env.identity_secret
       );
     });
-  }
-
-  async getUserItems(steam_id, app_id) {
-    const inventoryPromise = new Promise((resolve, reject) => {
-      this.community.getUserInventoryContents(
-        steam_id,
-        app_id,
-        2,
-        true,
-        (err, inventory) => {
-          resolve(inventory);
-        }
-      );
-    });
-
-    try {
-      const items = await inventoryPromise;
-      return items;
-    } catch (err) {
-      console.log(err);
-      throw err;
-    }
   }
 }
 
