@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/nyamkamunhjin/steam-trade-backend#readme",
   "dependencies": {
-    "apollo-server": "^2.7.0",
+    "apollo-server": "^2.25.3",
     "apollo-server-express": "^2.7.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
